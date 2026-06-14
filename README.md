@@ -1,8 +1,9 @@
 # UniversalNumbers.jl
 
 Julia bindings for the [Stillwater Universal](https://github.com/stillwater-sc/universal)
-C++ number-systems library: **posits**, **classic floats (cfloat)**, and
-**logarithmic number systems (LNS)** as first-class Julia numbers.
+C++ number-systems library: **posits**, **classic floats (cfloat)**, **logarithmic number
+systems (LNS)**, **takum**, **IBM hex float (hfloat)**, and **decimal float (dfloat)**
+as first-class Julia numbers.
 
 ```julia
 julia> using UniversalNumbers
@@ -31,6 +32,10 @@ Posit{32,2}(1.4142135623842478)
 | `LNS{32,16}` | `lns<32, 16>` | 32 bits |
 | `Takum{16}` | `takum<16, 3>` | 16 bits |
 | `Takum{32}` | `takum<32, 3>` | 32 bits |
+| `HFloat{6,7}` | `hfloat<6, 7>` (hfp32) | 32 bits |
+| `HFloat{14,7}` | `hfloat<14, 7>` (hfp64) | 64 bits |
+| `DFloat{7,6}` | `dfloat<7, 6, BID>` (decimal32) | 32 bits |
+| `DFloat{16,8}` | `dfloat<16, 8, BID>` (decimal64) | 64 bits |
 
 Universal's types are C++ compile-time templates, so each instantiation must be
 compiled into the bridge library. Both sides are generated from a **type
