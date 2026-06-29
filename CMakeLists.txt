@@ -1,7 +1,7 @@
 cmake_minimum_required(VERSION 3.20)
 project(universal_julia_wrapper LANGUAGES CXX)
 
-set(CMAKE_CXX_STANDARD 20)
+set(CMAKE_CXX_STANDARD 23)   # libc++ (macOS) rejects std::string in constexpr before C++23
 set(CMAKE_CXX_STANDARD_REQUIRED ON)
 
 include(GNUInstallDirs)

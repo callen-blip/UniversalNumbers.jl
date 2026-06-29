@@ -5,6 +5,8 @@
 #include <cmath>
 #include <cstring>
 #include <limits>
+#include <type_traits>   // std::is_constant_evaluated -- libc++ (macOS) needs it explicit
+#include <utility>
 
 // configure the universal library
 #define CFLOAT_THROW_ARITHMETIC_EXCEPTION 0
