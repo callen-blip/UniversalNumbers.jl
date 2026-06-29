@@ -53,9 +53,10 @@ cmake --install build
 # ---------------------------------------------------------------------------
 # Target platforms
 # ---------------------------------------------------------------------------
-# The library exports only extern "C" symbols, so we do NOT need
-# expand_cxxstring_abis -- the C ABI is stable across libstdc++ string-ABI
-# variants.  Windows uses MinGW-w64 which supports __uint128_t (used by dd).
+# The public API is pure extern "C", but the compiled library still contains
+# internal std::string symbols (printbits / Universal manipulators), so the
+# auditor requires building both libstdc++ string ABIs.  Windows uses MinGW-w64
+# which supports __uint128_t (used by dd).
 platforms = [
     Platform("x86_64",  "linux";   libc = "glibc"),
     Platform("aarch64", "linux";   libc = "glibc"),
@@ -63,6 +64,9 @@ platforms = [
     Platform("aarch64", "macos"),
     Platform("x86_64",  "windows"),
 ]
+
+# Internal std::string symbols -> build for both C++ string ABIs (cxx03 + cxx11).
+platforms = expand_cxxstring_abis(platforms)
 
 # ---------------------------------------------------------------------------
 # Products
@@ -74,8 +78,11 @@ products = [
 # ---------------------------------------------------------------------------
 # Dependencies
 # ---------------------------------------------------------------------------
-# None -- Stillwater Universal headers are vendored in deps/
-dependencies = Dependency[]
+# Stillwater Universal headers are vendored in deps/.  The compiled library links
+# the GCC runtime (libgcc_s), provided by CompilerSupportLibraries_jll.
+dependencies = [
+    Dependency("CompilerSupportLibraries_jll"),
+]
 
 # ---------------------------------------------------------------------------
 build_tarballs(ARGS, name, version, sources, script, platforms, products, dependencies;
