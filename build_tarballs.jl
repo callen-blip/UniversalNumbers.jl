@@ -36,7 +36,7 @@ version = v"0.1.0"
 sources = [
     GitSource(
         "https://github.com/jamesquinlan/UniversalNumbers.jl.git",
-        "9da14fe579aaf928b38af3279705574e76fec7f1",   # run: git rev-parse v0.1.0^{}
+        "1bbd5c45e9647af037b13a5b923a5532b1254c6a",   # run: git rev-parse v0.1.0^{}
     ),
 ]
 
