@@ -1,11 +1,11 @@
 # <img src="universalnumbers.svg" width="45" height="45" align="absmiddle"/> UniversalNumbers.jl
 
 [![CI](https://github.com/jamesquinlan/UniversalNumbers.jl/actions/workflows/ci.yml/badge.svg)](https://github.com/jamesquinlan/UniversalNumbers.jl/actions/workflows/ci.yml)
+[![codecov](https://codecov.io/gh/jamesquinlan/UniversalNumbers.jl/branch/main/graph/badge.svg)](https://codecov.io/gh/jamesquinlan/UniversalNumbers.jl)
+[![Aqua](https://raw.githubusercontent.com/JuliaTesting/Aqua.jl/master/badge.svg)](https://github.com/JuliaTesting/Aqua.jl)
 <!-- DOI badge after Zenodo archives the v0.1.0 release, replace XXXXXXX with the (concept) DOI and uncomment:
 [![DOI](https://zenodo.org/badge/DOI/10.5281/zenodo.XXXXXXX.svg)](https://doi.org/10.5281/zenodo.XXXXXXX)
 -->
-[![codecov](https://codecov.io/gh/jamesquinlan/UniversalNumbers.jl/branch/main/graph/badge.svg)](https://codecov.io/gh/jamesquinlan/UniversalNumbers.jl)
-[![Aqua](https://raw.githubusercontent.com/JuliaTesting/Aqua.jl/master/badge.svg)](https://github.com/JuliaTesting/Aqua.jl)
 
 
 Julia bindings for the [Stillwater Universal](https://github.com/stillwater-sc/universal)
