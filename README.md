@@ -48,8 +48,8 @@ environment, so no local C++ toolchain or Julia install is needed:
 
 ```bash
 docker build -t universalnumbers .
-docker run --rm -it universalnumbers                                # Julia REPL with the package
-docker run --rm -it universalnumbers julia --project=. test/runtests.jl   # run the test suite
+docker run --rm -it universalnumbers
+docker run --rm -it universalnumbers julia --project=. test/runtests.jl
 ```
 
 ## Quick start
