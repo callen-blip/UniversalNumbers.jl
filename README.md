@@ -43,13 +43,28 @@ winget install --name Julia --id 9NJNWW8PVKMN -e -s msstore
 
 ### Docker
 
-A [`Dockerfile`](Dockerfile) builds the C++ bridge and a ready-to-use Julia
-environment, so no local C++ toolchain or Julia install is needed:
+Two images are provided; neither needs a local Julia install.
+
+**User image ([`Dockerfile.user`](Dockerfile.user))** installs the prebuilt package
+from the General registry (the C++ bridge arrives as the `UniversalNumbers_jll`
+binary, so no C++ toolchain needed) and preloads the packages used by the bundled examples. Use this to run and experiment:
+
+```bash
+docker build -f Dockerfile.user -t universalnumbers:user .
+docker run --rm -it universalnumbers:user                         # Julia REPL, package ready
+docker run --rm -it universalnumbers:user julia examples/quire.jl # run a bundled example
+```
+
+Run examples as `julia examples/<name>.jl` in this image (the default project is preset); do not pass `--project=examples`, which expects a from-source build.
+
+**Source image ([`Dockerfile`](Dockerfile))** compiles the C++ bridge from source
+(cmake and g++ live in the image) and precompiles the package. Use this to build and
+test from source or to reproduce CI:
 
 ```bash
 docker build -t universalnumbers .
-docker run --rm -it universalnumbers
-docker run --rm -it universalnumbers julia --project=. test/runtests.jl
+docker run --rm -it universalnumbers                                      # Julia REPL with the package
+docker run --rm -it universalnumbers julia --project=. test/runtests.jl   # run the test suite
 ```
 
 ## Quick start
@@ -71,9 +86,7 @@ A \ b                        # Solve Ax = b in posit arithmetic
 
 ## Supported types
 
-Each type is a Julia `AbstractFloat` subtype backed by a specific Universal C++
-template instantiation. The type parameters are always integers (no trailing
-block-type argument needed from user code).
+Each type is a Julia `AbstractFloat` subtype backed by a specific Universal C++ template instantiation. The type parameters are always integers (no trailing block-type argument needed from user code).
 
 | Julia type | Universal C++ type | Bits | Notes |
 |---|---|---|---|
@@ -141,8 +154,7 @@ The raw bit encoding is always accessible as `x.data`.
 
 ## NaR: how posits handle "not a real"
 
-Posits have no `Inf` and no signed zero; instead they reserve one encoding `100...0`
-called **NaR** (Not-a-Real). Its semantics differ from IEEE NaN:
+Posits have no `Inf` and no signed zero; instead they reserve one encoding `100...0` called **NaR** (Not-a-Real). Its semantics differ from IEEE NaN:
 
 ```julia
 julia> n = Posit{16,1}(NaN)              # NaN converts to NaR
@@ -168,8 +180,7 @@ true
 
 ## Posit number-system properties
 
-All properties follow from the posit standard (useed = 2^(2^ES)); all registered types
-are verified by the test suite.
+All properties follow from the posit standard (useed = 2^(2^ES)); all registered types are verified by the test suite.
 
 - **Reciprocal symmetry**: `floatmin(T) * floatmax(T) == 1.0` exactly — every dynamic-range
   extreme has an exact reciprocal. IEEE `Float16` gives `floatmin * floatmax ≈ 4`.
@@ -195,21 +206,16 @@ are verified by the test suite.
 
 A few types behave in ways worth knowing before you rely on them:
 
-- **`HFloat` and `DFloat` parameters count digits, not total bits.** `HFloat{N,ES}` has
-  `N` = hex-fraction digits and `ES` = exponent bits, so `HFloat{6,7}` is a **32-bit** type
-  (1 + 7 + 6×4 = 32). Likewise `DFloat{N,ES}` uses `N` = significand digits. This differs from
-  `Posit`/`CFloat`/`LNS`, where the first parameter is the total bit width.
-- **`HFloat`, `DFloat`, and `Fixed` have no NaN or Inf.** None reserve encodings for them, so
-  `isnan(x)` and `isinf(x)` always return `false`, and there is no overflow sentinel.
-- **`Fixed` is modular.** Arithmetic that exceeds the range wraps around (2's-complement
-  modular) rather than saturating or producing Inf. `sqrt` of a negative and `log` of a
+- **`HFloat` and `DFloat` parameters count digits, not total bits.** `HFloat{N,ES}` has `N` = hex-fraction digits and `ES` = exponent bits, so `HFloat{6,7}` is a **32-bit** type
+  (1 + 7 + 6×4 = 32). Likewise `DFloat{N,ES}` uses `N` = significand digits. This differs from `Posit`/`CFloat`/`LNS`, where the first parameter is the total bit width.
+- **`HFloat`, `DFloat`, and `Fixed` have no NaN or Inf.** None reserve encodings for them, so `isnan(x)` and `isinf(x)` always return `false`, and there is no overflow sentinel.
+- **`Fixed` is modular.** Arithmetic that exceeds the range wraps around (2's-complement modular) rather than saturating or producing Inf. `sqrt` of a negative and `log` of a
   non-positive `Fixed` value return `0` rather than raising an error.
 - **`Takum` NaR is unordered.** Unlike posit NaR (which sorts below every real), `NaR < x` is
   `false` for all `x` under the takum standard, so comparisons against takum NaR follow
   IEEE-NaN-like ordering. See the NaR section above for posit behavior.
 - **`DD` (double-double) steps are tiny.** `nextfloat(DD(1.0))` increments by ~2⁻¹⁰⁶, which is
-  below `Float64` print precision, so it *displays* as `DD(1.0)` even though the stored value
-  did change.
+  below `Float64` print precision, so it *displays* as `DD(1.0)` even though the stored value did change.
 
 ## Linear algebra
 
@@ -228,18 +234,14 @@ lu(A)          # LU decomposition in posit arithmetic
 det(A)         # Posit{16,1}(-2.0)
 ```
 
-This makes it straightforward to study how alternative number systems behave in real
-numerical kernels — e.g. compare a `Posit{16,1}` matrix factorization against
-`Float16`/`Float32` baselines.
+This makes it straightforward to study how alternative number systems behave in real numerical kernels -- e.g. compare a `Posit{16,1}` matrix factorization against `Float16`/`Float32` baselines.
 
-**Note on LNS:** logarithmic numbers quantize in the log domain, so products and quotients
-are exact while values like `1.5` are stored as the nearest representable power-of-two
+**Note on LNS:** logarithmic numbers quantize in the log domain, so products and quotients are exact while values like `1.5` are stored as the nearest representable power-of-two
 fraction. This is inherent to the number system.
 
 ### Quire support
 
-Posits carry an associated **quire**, a wide fixed-point accumulator that sums products
-with no intermediate rounding. `fdp` uses it to compute an **exact fused dot product**; 
+Posits carry an associated **quire**, a wide fixed-point accumulator that sums products with no intermediate rounding. `fdp` uses it to compute an **exact fused dot product**; 
 every term is accumulated exactly and the result is rounded only once, at the end:
 
 ```julia
@@ -328,12 +330,9 @@ UniversalNumbers.jl/
 
 ## Contributing
 
-Contributions are welcome — bug reports, new type registrations, and build/CI
-improvements. See **[CONTRIBUTING.md](CONTRIBUTING.md)** for the full guide (adding a
-type, the JLL build, and design notes).
+Contributions are welcome — bug reports, new type registrations, and build/CI improvements. See **[CONTRIBUTING.md](CONTRIBUTING.md)** for the full guide (adding a type, the JLL build, and design notes).
 
-**Building from source** is only needed for development — users get the pre-built bridge
-library automatically via `UniversalNumbers_jll`. Prerequisites:
+**Building from source** is only needed for development -- users get the pre-built bridge library automatically via `UniversalNumbers_jll`. Prerequisites:
 
 - Julia ≥ 1.10
 - CMake ≥ 3.20
@@ -347,10 +346,8 @@ julia --project=. -e 'using Pkg; Pkg.instantiate()'   # resolve/download deps
 julia --project=. test/runtests.jl                    # run the test suite
 ```
 
-When running from source the module loads `build/libuniversal.so` directly; the installed
-package uses the JLL artifact instead. Registration with the Julia General registry and
-[Yggdrasil](https://github.com/JuliaPackaging/Yggdrasil) is handled by the maintainer —
-please open build-related pull requests against this repository rather than submitting to
+When running from source the module loads `build/libuniversal.so` directly; the installed package uses the JLL artifact instead. Registration with the Julia General  registry and
+[Yggdrasil](https://github.com/JuliaPackaging/Yggdrasil) is handled by the maintainer -- please open build-related pull requests against this repository rather than submitting to
 Yggdrasil directly.
 
 ## References and Citations (bibTeX)
@@ -368,13 +365,13 @@ Yggdrasil directly.
 
 % --- Please also cite this package ---
 @article{omtzigt2023universal,
-  title={Universal Numbers Library: Multi-format Variable Precision Arithmetic Library},
-  author={Omtzigt, E Theodore L and Quinlan, James},
-  journal={Journal of Open Source Software},
-  volume={8},
-  number={83},
-  pages={5072},
-  year={2023}
+  title    = {Universal Numbers Library: Multi-format Variable Precision Arithmetic Library},
+  author   = {Omtzigt, E Theodore L and Quinlan, James},
+  journal  = {Journal of Open Source Software},
+  volume   = {8},
+  number   = {83},
+  pages    = {5072},
+  year     = {2023}
 }
 
 @article{gustafson2017beating,
@@ -422,12 +419,12 @@ Yggdrasil directly.
 }
 
 @article{wang2019bfloat16,
-  title={BFloat16: The secret to high performance on Cloud TPUs},
-  author={Wang, Shibo and Kanwar, Pankaj},
-  journal={Google Cloud Blog},
-  volume={4},
-  number={1},
-  year={2019}
+  title    = {BFloat16: The secret to high performance on Cloud TPUs},
+  author   = {Wang, Shibo and Kanwar, Pankaj},
+  journal  = {Google Cloud Blog},
+  volume   = {4},
+  number   = {1},
+  year     = {2019}
 }
 
  
