@@ -356,8 +356,7 @@ Yggdrasil directly.
 % --- Cite this package ---
 @software{quinlan2026doi10_5281_21456650,
   author       = {Quinlan, James and Arciero, Michael},
-  title        = {UniversalNumbers.jl: Next-generation computer 
-                   arithmetic in Julia},
+  title        = {UniversalNumbers.jl: Next-generation computer arithmetic in Julia},
   month        = jul,
   year         = 2026,
   publisher    = {Zenodo},
