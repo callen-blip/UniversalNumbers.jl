@@ -3,7 +3,7 @@
 [![CI](https://github.com/jamesquinlan/UniversalNumbers.jl/actions/workflows/ci.yml/badge.svg)](https://github.com/jamesquinlan/UniversalNumbers.jl/actions/workflows/ci.yml)
 [![codecov](https://codecov.io/github/jamesquinlan/UniversalNumbers.jl/graph/badge.svg?token=3VV295J5Z6)](https://codecov.io/github/jamesquinlan/UniversalNumbers.jl)
 [![Aqua](https://raw.githubusercontent.com/JuliaTesting/Aqua.jl/master/badge.svg)](https://github.com/JuliaTesting/Aqua.jl)
-[![DOI](https://zenodo.org/badge/DOI/10.5281/zenodo.21456650.svg)](https://doi.org/10.5281/zenodo.21456650)
+[![DOI](https://zenodo.org/badge/DOI/10.5281/zenodo.21456649.svg)](https://doi.org/10.5281/zenodo.21456649)
  
 
 
@@ -354,15 +354,15 @@ Yggdrasil directly.
 ```bibtex
 
 % --- Cite this package ---
-@software{quinlan2026doi10_5281_21456650,
+@software{quinlan2026universalnumbers,
   author       = {Quinlan, James and Arciero, Michael},
   title        = {UniversalNumbers.jl: Next-generation computer arithmetic in Julia},
   month        = jul,
   year         = 2026,
   publisher    = {Zenodo},
   version      = {0.1.1},
-  doi          = {10.5281/zenodo.21456650},
-  url          = {https://doi.org/10.5281/zenodo.21456650},
+  doi          = {10.5281/zenodo.21456649},
+  url          = {https://doi.org/10.5281/zenodo.21456649},
 }
 
 % --- Please also cite this package ---
@@ -433,6 +433,17 @@ Yggdrasil directly.
 
 
 ```
+
+## Citation
+
+If you use UniversalNumbers.jl in your work, please cite the archived software. GitHub's
+**Cite this repository** button reads [`CITATION.cff`](CITATION.cff) and produces a ready
+citation; the BibTeX entry above is also available.
+
+The concept DOI [10.5281/zenodo.21456649](https://doi.org/10.5281/zenodo.21456649) always
+resolves to the latest release. To cite a specific version instead, use its version DOI
+(v0.1.1 is [10.5281/zenodo.21456650](https://doi.org/10.5281/zenodo.21456650)); each release
+gets its own on Zenodo.
 
 ## License
 

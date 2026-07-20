@@ -29,7 +29,7 @@ keywords:
   - number systems
   - scientific computing
   - mathematics 
-doi: 10.5281/zenodo.21456650
+doi: 10.5281/zenodo.21456649
 # TODO (after publishing):
 #   - add a `preferred-citation:` block pointing at the JOSS paper so the
 #     "Cite this repository" button suggests the paper instead of the software.
