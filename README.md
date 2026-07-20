@@ -3,7 +3,7 @@
 [![CI](https://github.com/jamesquinlan/UniversalNumbers.jl/actions/workflows/ci.yml/badge.svg)](https://github.com/jamesquinlan/UniversalNumbers.jl/actions/workflows/ci.yml)
 [![codecov](https://codecov.io/github/jamesquinlan/UniversalNumbers.jl/graph/badge.svg?token=3VV295J5Z6)](https://codecov.io/github/jamesquinlan/UniversalNumbers.jl)
 [![Aqua](https://raw.githubusercontent.com/JuliaTesting/Aqua.jl/master/badge.svg)](https://github.com/JuliaTesting/Aqua.jl)
-[![DOI](https://zenodo.org/badge/DOI/10.5281/zenodo.21456649.svg)](https://doi.org/10.5281/zenodo.21456649)
+[![DOI](https://zenodo.org/badge/DOI/10.5281/zenodo.21462151.svg)](https://doi.org/10.5281/zenodo.21462151)
  
 
 
@@ -360,9 +360,9 @@ Yggdrasil directly.
   month        = jul,
   year         = 2026,
   publisher    = {Zenodo},
-  version      = {0.1.1},
-  doi          = {10.5281/zenodo.21456649},
-  url          = {https://doi.org/10.5281/zenodo.21456649},
+  version      = {0.1.2},
+  doi          = {10.5281/zenodo.21462151},
+  url          = {https://doi.org/10.5281/zenodo.21462151},
 }
 
 % --- Please also cite this package ---
@@ -441,8 +441,9 @@ If you use UniversalNumbers.jl in your work, please cite the archived software. 
 citation; the BibTeX entry above is also available.
 
 The concept DOI [10.5281/zenodo.21456649](https://doi.org/10.5281/zenodo.21456649) always
-resolves to the latest release. To cite a specific version instead, use its version DOI
-(v0.1.1 is [10.5281/zenodo.21456650](https://doi.org/10.5281/zenodo.21456650)); each release
+resolves to the latest release. To cite a specific version instead, use its version DOI:
+(v0.1.1 is [10.5281/zenodo.21456650](https://doi.org/10.5281/zenodo.21456650));
+(v0.1.2 is [10.5281/zenodo.21462151](https://doi.org/10.5281/zenodo.21456650)); each release
 gets its own on Zenodo.
 
 ## License
