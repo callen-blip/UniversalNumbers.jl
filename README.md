@@ -3,9 +3,8 @@
 [![CI](https://github.com/jamesquinlan/UniversalNumbers.jl/actions/workflows/ci.yml/badge.svg)](https://github.com/jamesquinlan/UniversalNumbers.jl/actions/workflows/ci.yml)
 [![codecov](https://codecov.io/github/jamesquinlan/UniversalNumbers.jl/graph/badge.svg?token=3VV295J5Z6)](https://codecov.io/github/jamesquinlan/UniversalNumbers.jl)
 [![Aqua](https://raw.githubusercontent.com/JuliaTesting/Aqua.jl/master/badge.svg)](https://github.com/JuliaTesting/Aqua.jl)
-<!-- DOI badge after Zenodo archives the v0.1.0 release, replace XXXXXXX with the (concept) DOI and uncomment:
-[![DOI](https://zenodo.org/badge/DOI/10.5281/zenodo.XXXXXXX.svg)](https://doi.org/10.5281/zenodo.XXXXXXX)
--->
+[![DOI](https://zenodo.org/badge/DOI/10.5281/zenodo.21456650.svg)](https://doi.org/10.5281/zenodo.21456650)
+ 
 
 
 Julia bindings for the [Stillwater Universal](https://github.com/stillwater-sc/universal)
@@ -355,12 +354,16 @@ Yggdrasil directly.
 ```bibtex
 
 % --- Cite this package ---
-@software{universalnumbers_jl,
-  author  = {Quinlan, James and Arciero, Mike},
-  title   = {{UniversalNumbers.jl}: Next-generation computer arithmetic in {Julia}},
-  year    = {2026},
-  url     = {https://github.com/jamesquinlan/UniversalNumbers.jl},
-  note    = {Julia package. Coming Soon: Zenodo DOI and/or JOSS paper if published}
+@software{quinlan2026doi10_5281_21456650,
+  author       = {Quinlan, James and Arciero, Michael},
+  title        = {UniversalNumbers.jl: Next-generation computer 
+                   arithmetic in Julia},
+  month        = jul,
+  year         = 2026,
+  publisher    = {Zenodo},
+  version      = {0.1.1},
+  doi          = {10.5281/zenodo.21456650},
+  url          = {https://doi.org/10.5281/zenodo.21456650},
 }
 
 % --- Please also cite this package ---
